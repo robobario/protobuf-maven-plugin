@@ -397,7 +397,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        executeSynchronised();
+    }
 
+
+    private synchronized void executeSynchronised() throws MojoExecutionException, MojoFailureException {
         if (skipMojo()) {
             return;
         }
@@ -526,6 +530,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     protoSourceRoot));
         }
     }
+
 
     /**
      * Generates native launchers for java protoc plugins.
