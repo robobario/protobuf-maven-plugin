@@ -392,16 +392,20 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     )
     private boolean clearOutputDirectory;
 
+    private static final Object LOCK = new Object();
+
     /**
      * Executes the mojo.
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        executeSynchronised();
+        synchronized (LOCK) {
+            executeSynchronised();
+        }
     }
 
 
-    private synchronized void executeSynchronised() throws MojoExecutionException, MojoFailureException {
+    private void executeSynchronised() throws MojoExecutionException, MojoFailureException {
         if (skipMojo()) {
             return;
         }
